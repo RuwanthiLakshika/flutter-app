@@ -3,10 +3,12 @@ import 'package:dio/dio.dart';
 import 'joke_service.dart';
 
 void main() {
-  runApp(MyJokeApp());
+  runApp(const MyJokeApp());
 }
 
 class MyJokeApp extends StatelessWidget {
+  const MyJokeApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -15,13 +17,16 @@ class MyJokeApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: JokeHomePage(),
+      home: const JokeHomePage(),
     );
   }
 }
 
 class JokeHomePage extends StatefulWidget {
+  const JokeHomePage({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _JokeHomePageState createState() => _JokeHomePageState();
 }
 
@@ -56,7 +61,7 @@ class _JokeHomePageState extends State<JokeHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Joke Generator'),
+        title: const Text('Joke Generator'),
         centerTitle: true,
       ),
       body: Center(
@@ -68,14 +73,14 @@ class _JokeHomePageState extends State<JokeHomePage> {
               // Jokes Display Area
               Expanded(
                 child: _isLoading
-                    ? CircularProgressIndicator()
+                    ? const CircularProgressIndicator()
                     : _errorMessage.isNotEmpty
                         ? Text(
                             _errorMessage,
-                            style: TextStyle(color: Colors.red),
+                            style: const TextStyle(color: Colors.red),
                           )
                         : _jokes.isEmpty
-                            ? Text(
+                            ? const Text(
                                 'Press the button to generate jokes!',
                                 style: TextStyle(fontSize: 18),
                               )
@@ -84,7 +89,7 @@ class _JokeHomePageState extends State<JokeHomePage> {
                                 itemBuilder: (context, index) {
                                   final joke = _jokes[index];
                                   return Card(
-                                    margin: EdgeInsets.symmetric(vertical: 8),
+                                    margin: const EdgeInsets.symmetric(vertical: 8),
                                     elevation: 4,
                                     child: Padding(
                                       padding: const EdgeInsets.all(12.0),
@@ -93,28 +98,28 @@ class _JokeHomePageState extends State<JokeHomePage> {
                                         children: [
                                           Text(
                                             'Joke ${index + 1}',
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 16,
                                             ),
                                           ),
-                                          SizedBox(height: 8),
+                                          const SizedBox(height: 8),
                                           joke['type'] == 'single'
                                               ? Text(
                                                   joke['joke'],
-                                                  style: TextStyle(fontSize: 16),
+                                                  style: const TextStyle(fontSize: 16),
                                                 )
                                               : Column(
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
                                                       'Setup: ${joke['setup']}',
-                                                      style: TextStyle(fontSize: 16),
+                                                      style: const TextStyle(fontSize: 16),
                                                     ),
-                                                    SizedBox(height: 8),
+                                                    const SizedBox(height: 8),
                                                     Text(
                                                       'Punchline: ${joke['delivery']}',
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                         fontSize: 16,
                                                         fontStyle: FontStyle.italic,
                                                       ),
@@ -128,25 +133,24 @@ class _JokeHomePageState extends State<JokeHomePage> {
                                 },
                               ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               // Generate Jokes Button
               ElevatedButton(
                 onPressed: _isLoading ? null : _fetchJokes,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white, backgroundColor: Colors.blue,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(
                     horizontal: 20.0,
                     vertical: 12.0,
                   ),
                   child: Text(
                     'Generate Jokes',
                     style: TextStyle(fontSize: 18),
-                  ),
-                ),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.blue,
-                  onPrimary: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
                   ),
                 ),
               ),
